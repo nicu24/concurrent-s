@@ -26,7 +26,7 @@ public class Store extends Thread {
     int storeSize = 100;
 
     public void openStore() {
-        int sellerCount = 5;
+        int sellerCount = 10;
         SellersService.inviteSellers(sellers, sellerCount);
         BuyerService.inviteNewBuyers(buyers, storeSize);
         log.info("Store is open");

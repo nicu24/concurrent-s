@@ -48,19 +48,23 @@ public class Stall {
 
         //  First Seller
 
-        sellers.get(0).serveTheBuyer(buyers.poll());
-        servedBuyers.incrementAndGet();
+    sellers.get(0).serveTheBuyer(buyers.poll());
+    servedBuyers.incrementAndGet();
 
 
 //Other Seller
-        for (int i = 1; i < n; i++) {
-            Seller seller = sellers.get(i);
-            new Thread(()-> {
-
+    for (int i = 1; i < n; i++) {
+        Seller seller = sellers.get(i);
+        new Thread(() -> {
+            try {
                 seller.serveTheBuyer(buyers.poll());
+            }catch (java.lang.NullPointerException e){ log.info("not buyers");}
                 servedBuyers.incrementAndGet();
-            }).start();
-        }
+        }).start();
+
+    }
+
+
 
         log.info(performanceService.checkPerformance(servedBuyers.get()));
     }
