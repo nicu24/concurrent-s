@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Queue;
 import java.util.logging.Logger;
 
-public class Store {
+public class Store extends Thread {
 
     final Logger log = new LogService().log;
 
@@ -26,18 +26,31 @@ public class Store {
     int storeSize = 100;
 
     public void openStore() {
-        SellersService.inviteSellers(sellers, 1);
+        int sellerCount = 5;
+        SellersService.inviteSellers(sellers, sellerCount);
         BuyerService.inviteNewBuyers(buyers, storeSize);
         log.info("Store is open");
-        startTrading();
+        startTrading(sellerCount);
+
     }
 
-    private void startTrading() {
+
+    private void startTrading(int sellerCount) {
         log.info("Start trading");
+
         while(true) {
-            stall.trade(buyers);
+            stall.trade(buyers,sellerCount);
+
             BuyerService.inviteNewBuyers(buyers, storeSize);
         }
+
+
+
     }
 
+
+
+
 }
+
+
